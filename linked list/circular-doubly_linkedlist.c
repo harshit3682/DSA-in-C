@@ -58,7 +58,7 @@ int insertatend(struct node **head, struct node **tail, int data)
     (*head)->prev = ptr;
 }
 
-int insertbeforevalue(struct node **head, struct node **tail, int value, int data)
+int insert_before_value(struct node **head, struct node **tail, int value, int data)
 {
     struct node *ptr = (struct node *)malloc(sizeof(struct node));
     if (ptr == NULL)
@@ -92,7 +92,7 @@ int insertbeforevalue(struct node **head, struct node **tail, int value, int dat
     temp->prev->next = ptr;
     temp->prev = ptr;
 }
-int insertaftervalue(struct node **head, struct node **tail, int value, int data)
+int insert_after_value(struct node **head, struct node **tail, int value, int data)
 {
     struct node *ptr = (struct node *)malloc(sizeof(struct node));
     if (ptr == NULL)
