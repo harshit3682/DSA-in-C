@@ -68,12 +68,13 @@ int isFull(struct Stack *ptr)
 void push(struct Stack *ptr)
 {
     int num;
-    printf("enter the no. of elements to enter");
+    printf("enter the no. of elements to enter:\n");
     scanf("%d", &num);
     int elements[num];
-    printf("enter the elements : ");
+    printf("enter the elements: ");
     for (int i = 0; i < num; i++)
     {
+        printf("%d element: ", i + 1);
         scanf("%d", &elements[i]);
     }
     for (int i = 0; i < num; i++)
@@ -114,11 +115,15 @@ void display(struct Stack *ptr)
     }
     else
     {
+        int count = 0;
         printf("Stack elements: ");
         for (int i = 0; i <= ptr->top; i++)
         {
+            count++;
+
             printf("%d ", ptr->arr[i]);
         }
+        printf("\nCount: %d", count);
         printf("\n");
     }
 }

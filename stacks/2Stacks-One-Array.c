@@ -18,7 +18,7 @@ void initialize(struct stack *s1, int cap)
     s1->arr = (int *)malloc(cap * sizeof(int));
 }
 
-void push1(struct stack *s1, int val)
+void push_first(struct stack *s1, int val)
 {
     if ((s1->top2 - s1->top1) > 1)
     {
@@ -33,7 +33,7 @@ void push1(struct stack *s1, int val)
         return;
     }
 }
-void push2(struct stack *s1, int val)
+void push_last(struct stack *s1, int val)
 {
     if ((s1->top2 - s1->top1) > 1)
     {
@@ -48,23 +48,57 @@ void push2(struct stack *s1, int val)
         return;
     }
 }
-int pop1(struct stack *s1)
+int isempty(struct stack *s1)
 {
+    if (s1->top1 == -1 && s1->top2 == s1->capacity)
+    {
+        printf("Stack is empty");
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+int pop_start(struct stack *s1)
+{
+    if (isempty(s1))
+    {
+        return -1;
+    }
+    if (s1->top1 == -1)
+    {
+        printf("Stack pointing to front is empty\n");
+        return -1;
+    }
     int x = s1->arr[s1->top1];
     s1->top1--;
     s1->size--;
     return x;
 }
-int pop2(struct stack *s1)
+int pop_end(struct stack *s1)
 {
+    if (isempty(s1))
+    {
+        return -1;
+    }
+    if (s1->top2 == s1->capacity)
+    {
+        printf("\nStack pointing to end is empty\n");
+        return -1;
+    }
     int x = s1->arr[s1->top2];
     s1->top2++;
     s1->size--;
     return x;
 }
-void display(struct stack *s1, int cap)
+void display(struct stack *s1)
 {
-    for (int i = 0; i < cap; i++)
+    if (isempty(s1))
+    {
+        return;
+    }
+    for (int i = 0; i < s1->size; i++)
     {
         printf("%d ", s1->arr[i]);
     }
@@ -78,7 +112,7 @@ void main()
     initialize(ptr, cap);
     do
     {
-        printf("\n\nStack Operations:\n 1. Push1\n 2. Push2\n 3. Pop1\n 4. Pop2\n 5. Display\n 6. Exit");
+        printf("\n\nStack Operations:\n 1. Push at start\n 2. Push at end\n 3. Pop from front\n 4. Pop from end\n 5. Display\n 6. Exit");
         printf("\nEnter the choice: ");
         scanf("%d", &ch);
         switch (ch)
@@ -87,27 +121,27 @@ void main()
         case 1:
             printf("Enter the element to insert: ");
             scanf("%d", &n);
-            push1(ptr, n);
+            push_first(ptr, n);
             break;
 
         case 2:
             printf("Enter the element to insert: ");
             scanf("%d", &n);
-            push2(ptr, n);
+            push_last(ptr, n);
             break;
 
         case 3:
-            val = pop1(ptr);
+            val = pop_start(ptr);
             printf("\nThe popped out element is %d", val);
             break;
 
         case 4:
-            val = pop2(ptr);
+            val = pop_end(ptr);
             printf("\nThe popped out element is %d", val);
             break;
 
         case 5:
-            display(ptr, cap);
+            display(ptr);
             break;
 
         case 6:
