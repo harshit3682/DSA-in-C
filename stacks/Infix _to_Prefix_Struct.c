@@ -130,10 +130,45 @@ char *convert_infix_to_postfix(char *exp)
     exp[++j] = '\0';
     return exp;
 }
+char *convert_infix_to_prefix(char *expression)
+{
+    int l = strlen(expression);
+    printf("\nl: %d\n", l);
+    for (int i = 0; i < l / 2; i++)
+    {
+        char temp = expression[l - 1 - i];
+        expression[l - i - 1] = expression[i];
+        expression[i] = temp;
+    }
+    for (int i = 0; i < l; i++)
+    {
+        if (expression[i] == '(')
+        {
+            expression[i] = ')';
+        }
+        else if (expression[i] == ')')
+        {
+            expression[i] = '(';
+        }
+    }
+    printf("Infix Expression Reverse: %s\n", expression);
 
+    char *exp = convert_infix_to_postfix(expression);
+
+    int l1 = strlen(exp);
+    for (int i = 0; i < l1 / 2; i++)
+    {
+        char temp1 = expression[l1 - 1 - i];
+        expression[l1 - i - 1] = expression[i];
+        expression[i] = temp1;
+    }
+    return exp;
+}
 void main()
 {
-    char expression[] = "(c*(a+b/d))";
-    char *exp = convert_infix_to_postfix(expression);
-    printf("%s", exp);
+    // char expression[] = "((a/b)+c)-(d+(e*f))";
+    char expression[] = "a*(b+c+d)";
+    char *exp = convert_infix_to_prefix(expression);
+
+    printf("Prefix Expression: %s", exp);
 }
