@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 struct node
 {
-    float coeff;
+    int coeff;
     int expo;
     struct node *next;
 };
 
-struct node *insert(struct node *head, float coff, int exo)
+struct node *insert(struct node *head, int coff, int exo)
 {
     struct node *new = (struct node *)malloc(sizeof(struct node));
     new->coeff = coff;
@@ -31,35 +32,40 @@ struct node *insert(struct node *head, float coff, int exo)
     }
     return head;
 }
-struct node *create(struct node *head)
+
+struct node *create()
 {
-    int n, c, e;
-    printf("Enter the number of terms in expression: ");
+    int n, e;
+    int c;
+    struct node *head = NULL;
+    printf("Enter the number of terms: ");
     scanf("%d", &n);
     for (int i = 0; i < n; i++)
     {
-        printf("Enter the coefficient: ");
-        scanf("%f", &c);
-        printf("Enter the exponential power: ");
+        printf("\nCoefficient = ");
+        scanf("%d", &c);
+        printf("Exponential power = ");
         scanf("%d", &e);
 
         head = insert(head, c, e);
     }
     return head;
 }
-struct node *print(struct node *head)
+
+void print(struct node *head)
 {
     struct node *temp = head;
     while (temp != NULL)
     {
-        printf("%fx^%d", temp->coeff, temp->expo);
+        printf("%dx^%d", temp->coeff, temp->expo);
         if (temp->next != NULL)
         {
-            printf("+");
+            printf(" + ");
         }
         temp = temp->next;
     }
 }
+
 struct node *polyadd(struct node *head1, struct node *head2)
 {
     struct node *ptr1 = head1;
@@ -69,50 +75,49 @@ struct node *polyadd(struct node *head1, struct node *head2)
     {
         if (ptr1->expo == ptr2->expo)
         {
-            insert(head3, ptr1->coeff + ptr2->coeff, ptr1->expo);
+            head3 = insert(head3, ptr1->coeff + ptr2->coeff, ptr1->expo);
             ptr1 = ptr1->next;
             ptr2 = ptr2->next;
         }
         else if (ptr1->expo > ptr2->expo)
         {
-            insert(head3, ptr1->coeff, ptr1->expo);
+            head3 = insert(head3, ptr1->coeff, ptr1->expo);
             ptr1 = ptr1->next;
         }
         else if (ptr2->expo > ptr1->expo)
         {
-            insert(head3, ptr2->coeff, ptr2->expo);
+            head3 = insert(head3, ptr2->coeff, ptr2->expo);
             ptr2 = ptr2->next;
         }
     }
     while (ptr1 != NULL)
     {
-        insert(head3, ptr1->coeff, ptr1->expo);
+        head3 = insert(head3, ptr1->coeff, ptr1->expo);
         ptr1 = ptr1->next;
     }
     while (ptr2 != NULL)
     {
-        insert(head3, ptr2->coeff, ptr2->expo);
+        head3 = insert(head3, ptr2->coeff, ptr2->expo);
         ptr2 = ptr2->next;
     }
 
-    // print(head3);
     return head3;
 }
 
-void main()
+int main()
 {
     struct node *head1 = NULL;
     struct node *head2 = NULL;
-    struct node *ptr1 = NULL;
-    struct node *ptr2 = NULL;
 
-    printf("Enter the first polynomial:\n");
-    ptr1 = create(head1);
+    printf("First polynomial:\n");
+    head1 = create();
 
-    printf("\nEnter the second polynomial:\n ");
-    ptr2 = create(head2);
+    printf("\nSecond polynomial:\n ");
+    head2 = create();
 
-    struct node *head3 = polyadd(ptr1, ptr2);
+    struct node *head3 = polyadd(head1, head2);
     printf("\nAdded polynomial is: ");
     print(head3);
+
+    return 0;
 }
