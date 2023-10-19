@@ -98,7 +98,7 @@ char *convert_infix_to_postfix(char *exp)
 
             if (s1->top > -1 && isprecedence(s1->stack[s1->top]) >= isprecedence(exp[i]))
             {
-                exp[++j] = pop(s1->top);
+                exp[++j] = pop();
             }
             push(exp[i]);
         }
@@ -107,7 +107,7 @@ char *convert_infix_to_postfix(char *exp)
         {
             while (s1->top > -1 && s1->stack[s1->top] != '(')
             {
-                exp[++j] = pop(s1->top);
+                exp[++j] = pop();
             }
             if (s1->top == -1 && s1->stack[s1->top] != '(')
             {
@@ -125,7 +125,7 @@ char *convert_infix_to_postfix(char *exp)
         {
             return "Parentheses Unmatched , extra opening parentheses. ";
         }
-        exp[++j] = pop(s1->top);
+        exp[++j] = pop();
     }
     exp[++j] = '\0';
     return exp;
