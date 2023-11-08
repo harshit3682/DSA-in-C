@@ -66,14 +66,14 @@ void print_level_order(struct node *root)
                                 q[rear] = temp->right; // enqueue(q, temp->right);
                         }
                 }
-                if (rear == 20)
-                {
-                        printf("\n");
-                        if (front != rear)
-                        {
-                                q[rear++] = NULL;
-                        }
-                }
+                // if (rear == 20)
+                // {
+                //         printf("\n");
+                //         if (front != rear)
+                //         {
+                //                 q[rear++] = NULL;
+                //         }
+                // }
         }
 } // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 int main()
