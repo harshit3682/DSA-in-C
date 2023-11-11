@@ -139,10 +139,59 @@ int insert_first(struct node **head, struct node **tail, int data)
     printf("\nValue inserted");
 }
 
-void print(struct node **head)
+void delete_value(struct node **head, int k)
 {
-    struct node *temp = *head;
-    printf("Elements are as: ");
+    if (*head == NULL)
+    {
+        printf("Nothing to delete");
+        return;
+    }
+    else if ((*head)->data == k)
+    {
+        struct node *temp = *head;
+        printf("\nDeleted value is %d", (*head)->data);
+
+        if ((*head)->next != NULL)
+        {
+            (*head) = (*head)->next;
+            free(temp);
+            return;
+        }
+        else
+        {
+            temp = NULL;
+            free((*head));
+            *head = NULL;
+            return;
+        }
+    }
+
+    else
+    {
+        struct node *temp1 = *head;
+        struct node *temp2 = (*head)->next;
+        while (temp2 != NULL)
+        {
+            if (temp2->data == k)
+            {
+                printf("Node with data %d is deleted", temp2->data);
+                temp1->next = temp2->next;
+                free(temp2);
+                return;
+            }
+            else
+            {
+                temp1 = temp2;
+                temp2 = temp2->next;
+            }
+        }
+    }
+}
+
+void print(struct node *head)
+{
+    struct node *temp = head;
+    printf("\nElements are as: ");
     while (temp != NULL)
     {
         printf("%d ", temp->data);
@@ -153,11 +202,12 @@ void main()
 {
     struct node *head = NULL;
     struct node *tail = NULL;
-    int ch, n1, n2, k;
+    int ch, n1, n2, k, del;
     do
     {
         printf("\n\n1.Insert at front.\n2.Insert at end");
-        printf("\n3.Insertion before value k\n4.Insertion after value K\n5.Display\n6.Exit\n");
+        printf("\n3.Insertion before value k\n4.Insertion after value K\n5.Delete node with value K ");
+        printf("\n6.Display\n7.Exit\n");
         printf("Enter the choice: ");
         scanf("%d", &ch);
         switch (ch)
@@ -185,11 +235,20 @@ void main()
             break;
 
         case 5:
-            print(&head);
+            printf("Enter value to be deleted: ");
+            scanf("%d", &del);
+            delete_value(&head, del);
             break;
+
         case 6:
+        {
+            print(head);
+            break;
+        }
+
+        case 7:
             printf("Exitting...");
             free(head);
         }
-    } while (ch != 6);
+    } while (ch != 7);
 }
