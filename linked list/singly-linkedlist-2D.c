@@ -210,12 +210,16 @@ void traversal(struct Node **head)
         return;
     }
     struct Node *ptr = *head;
+    int cnt=0;
     printf("Elements are as: ");
     while (ptr != NULL)
     {
         printf("%d ", ptr->data);
         ptr = ptr->next;
+        cnt++;
     }
+        printf("Count is: %d",cnt);
+
 }
 int main()
 {
